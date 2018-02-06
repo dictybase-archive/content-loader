@@ -18,7 +18,7 @@ node index upload|u [-f|--file=<file>]  [-s|--server=<server>] [-n|--namespace=<
 Example:
 
 ```
-node upload file=example.json server=localhost:3000 namespace=example
+node index upload file=example.json server=localhost:3000 namespace=example
 ```
 
 For help type:
