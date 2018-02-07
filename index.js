@@ -1,6 +1,6 @@
-// const fs = require('fs')
-// const request = require('request')
-// const convertFromRaw = require('draft-js').convertFromRaw
+const fs = require('fs')
+const request = require('request')
+const convertToRaw = require('draft-js').convertToRaw
 const yargs = require('yargs')
 
 yargs
@@ -34,7 +34,9 @@ yargs
                 })
         },
         function(argv) {
-            console.log(argv.file, argv.server, argv.namespace)
+            let fileContent = fs.readFileSync(argv.file)
+            // let convertedRawContent = JSON.stringify(convertToRaw(fileContent))
+            // console.log(convertedRawContent.toString('utf8'))
         }
     )
     .help('h')
