@@ -7,7 +7,7 @@ To get started:
 npm install --save https://github.com/dictyBase/content-loader
 ```
 
-The script accepts three arguments as such: `upload [-f|--file=<file>]  [-s|--server=<server>] [-n|--namespace=<namespace>]`. It converts the desired file into the appropriate JSON format for use with the dictyBase API server.
+The script accepts three arguments as such: `upload [-f|--file <file>]  [-s|--server <server>] [-n|--namespace <namespace>]`. It converts the desired file into the appropriate JSON format for use with the dictyBase API server.
 
 To run the script type:
 

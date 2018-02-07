@@ -37,7 +37,8 @@ yargs
             console.log(argv.file, argv.server, argv.namespace)
         }
     )
-    .help()
+    .help('h')
+    .alias('h', 'help')
     .example(
         'node index upload --file example.json --server localhost:3000 --namespace example'
     )
