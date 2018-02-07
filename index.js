@@ -1,6 +1,5 @@
 const fs = require('fs')
-const request = require('request')
-const convertToRaw = require('draft-js').convertToRaw
+const http = require('http')
 const yargs = require('yargs')
 
 yargs
@@ -33,10 +32,12 @@ yargs
                     describe: 'the namespace for the file'
                 })
         },
-        function(argv) {
-            let fileContent = fs.readFileSync(argv.file)
-            // let convertedRawContent = JSON.stringify(convertToRaw(fileContent))
-            // console.log(convertedRawContent.toString('utf8'))
+        argv => {
+            let fileContent = fs.readFileSync(argv.file).toString()
+            let serialized = JSON.stringify(fileContent)
+            console.log(serialized)
+
+
         }
     )
     .help('h')

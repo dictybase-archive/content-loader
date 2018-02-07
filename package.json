@@ -17,10 +17,6 @@
   },
   "homepage": "https://github.com/dictyBase/content-loader#readme",
   "dependencies": {
-    "draft-js": "^0.10.5",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "request": "^2.83.0",
     "yargs": "^11.0.0"
   }
 }
