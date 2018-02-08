@@ -24,13 +24,15 @@ yargs
                     alias: 's',
                     type: 'string',
                     default: 'content-api',
-                    describe: 'the server to upload to'
+                    describe: 'the server to upload to',
+                    env: 'CONTENT_API_SERVICE_HOST'
                 })
                 .positional('port', {
                     alias: 'p',
                     type: 'number',
                     default: '9999',
-                    describe: 'the port for the server'
+                    describe: 'the port for the server',
+                    env: 'CONTENT_API_SERVICE_PORT'
                 })
                 .positional('namespace', {
                     alias: 'n',
