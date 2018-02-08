@@ -59,7 +59,7 @@ yargs
                 data: {
                     type: 'contents',
                     attributes: {
-                        name: argv.file,
+                        name: argv.file.slice(0, -5),
                         created_by: 99999999,
                         content: fileContent,
                         namespace: argv.namespace
