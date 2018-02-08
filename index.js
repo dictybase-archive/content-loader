@@ -9,8 +9,8 @@ yargs
     .describe('v', 'show version information')
 
     .command(
-        'upload [file] [server] [namespace]',
-        'input file to upload with specified server and namespace',
+        'upload [file] [server] [port] [namespace]',
+        'input file to upload with specified server, port and namespace',
         yargs => {
             yargs
                 .positional('file', {
@@ -36,8 +36,10 @@ yargs
                 })
         },
         argv => {
+            // read file and convert to string
             let fileContent = fs.readFileSync(argv.file).toString()
 
+            // set options for HTTP POST request
             let options = {
                 host: argv.server,
                 port: argv.port,
@@ -49,6 +51,7 @@ yargs
                 }
             }
 
+            // set object to match dictybase content API
             let model = {
                 data: {
                     type: 'contents',
@@ -61,6 +64,7 @@ yargs
                 }
             }
 
+            // make the HTTP request
             let req = http.request(options, res => {
                 console.log(`STATUS: ${res.statusCode}\n`)
                 console.log(`HEADERS: ${JSON.stringify(res.headers)}\n`)
@@ -80,6 +84,8 @@ yargs
 
             // write data to request body
             req.write(JSON.stringify(model))
+
+            // end request
             req.end()
         }
     )
