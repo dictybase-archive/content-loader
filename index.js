@@ -16,59 +16,60 @@ yargs
                 .positional('file', {
                     alias: 'f',
                     type: 'string',
-                    default: 'index',
                     describe: 'the file to upload'
                 })
                 .positional('server', {
                     alias: 's',
                     type: 'string',
-                    default: 'localhost:3000',
                     describe: 'the server to upload to'
+                })
+                .positional('port', {
+                    alias: 'p',
+                    type: 'number',
+                    default: '9999',
+                    describe: 'the port for the server'
                 })
                 .positional('namespace', {
                     alias: 'n',
                     type: 'string',
-                    default: 'index', // change to filename
                     describe: 'the namespace for the file'
                 })
         },
         argv => {
             let fileContent = fs.readFileSync(argv.file).toString()
-            // let serializedData = JSON.stringify(fileContent)
-            // console.log(serializedData)
 
             let options = {
                 host: argv.server,
-                port: 31827, // need to pull from server argument
+                port: argv.port,
                 path: '/contents',
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'accept': 'application.json'
+                    'accept': 'application/json'
                 }
             }
 
             let model = {
-                "data": {
-                    "type": "string",
-                    "attributes": {
-                      "name": "string",
-                      "created_by": "string",
-                      "content": fileContent,
-                      "namespace": argv.namespace
+                data: {
+                    type: 'contents',
+                    attributes: {
+                        name: argv.file,
+                        created_by: 99999999,
+                        content: fileContent,
+                        namespace: argv.namespace
                     }
                 }
             }
 
             let req = http.request(options, res => {
-                console.log(`STATUS: ${res.statusCode}`)
-                console.log(`HEADERS: ${JSON.stringify(res.headers)}`)
+                console.log(`STATUS: ${res.statusCode}\n`)
+                console.log(`HEADERS: ${JSON.stringify(res.headers)}\n`)
                 res.setEncoding('utf8')
                 res.on('data', chunk => {
-                    console.log(`BODY: ${chunk}`)
+                    console.log(`BODY: ${chunk}\n`)
                 })
                 res.on('end', () => {
-                    console.log('No more data in response.')
+                    console.log('End of data from response.')
                 })
             })
 
@@ -76,7 +77,7 @@ yargs
             req.on('error', e => {
                 console.log(`Problem with request: ${e.message}`)
             })
-            
+
             // write data to request body
             req.write(JSON.stringify(model))
             req.end()
@@ -85,7 +86,7 @@ yargs
     .help('h')
     .alias('h', 'help')
     .example(
-        'node index upload --file example.json --server localhost:3000 --namespace example'
+        'node index upload --file example.json --server localhost --port 31827 --namespace example'
     )
-    .example('node index upload -f example.json -s localhost:3000 -n example')
+    .example('node index upload -f example.json -s localhost -p 31827 -n example')
     .argv
