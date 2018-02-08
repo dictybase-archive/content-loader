@@ -12,7 +12,7 @@ yargs
 
     .command(
         'upload [file] [host] [port] [namespace]',
-        'input file to upload with specified server, port and namespace',
+        'input file to upload with specified host, port and namespace',
         yargs => {
             yargs
                 .env('CONTENT_API_SERVICE')
@@ -22,7 +22,7 @@ yargs
                     describe: 'the file to upload'
                 })
                 .positional('host', {
-                    alias: 'h',
+                    alias: 'H',
                     type: 'string',
                     default: 'content-api',
                     describe: 'the server to upload to'
@@ -30,7 +30,6 @@ yargs
                 .positional('port', {
                     alias: 'p',
                     type: 'number',
-                    default: '9999',
                     describe: 'the port for the server'
                 })
                 .positional('namespace', {
@@ -93,10 +92,10 @@ yargs
             req.end()
         }
     )
-    .help('?')
-    .alias('?', 'help')
+    .help('h')
+    .alias('h', 'help')
     .example(
-        'upload --file example.json --server localhost --port 31827 --namespace example'
+        'upload --file example.json --host localhost --port 31827 --namespace example'
     )
-    .example('upload -f example.json -s localhost -p 31827 -n example')
+    .example('upload -f example.json -H localhost -p 31827 -n example')
     .argv
