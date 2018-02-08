@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const fs = require('fs')
 const http = require('http')
 const yargs = require('yargs')
@@ -21,6 +23,7 @@ yargs
                 .positional('server', {
                     alias: 's',
                     type: 'string',
+                    default: 'content-api',
                     describe: 'the server to upload to'
                 })
                 .positional('port', {
@@ -92,7 +95,7 @@ yargs
     .help('h')
     .alias('h', 'help')
     .example(
-        'node index upload --file example.json --server localhost --port 31827 --namespace example'
+        'upload --file example.json --server localhost --port 31827 --namespace example'
     )
-    .example('node index upload -f example.json -s localhost -p 31827 -n example')
+    .example('upload -f example.json -s localhost -p 31827 -n example')
     .argv

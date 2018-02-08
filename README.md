@@ -12,13 +12,13 @@ The script accepts three arguments as such: `upload [-f|--file <file>]  [-s|--se
 To run the script type:
 
 ```
-node index upload [-f|--file <file>] [-s|--server <server>] [-p|--port <port>] [-n|--namespace <namespace>]
+upload [-f|--file <file>] [-s|--server <server>] [-p|--port <port>] [-n|--namespace <namespace>]
 ```
 
 Example:
 
 ```
-node index upload -f example.json -s localhost -p 3000 -n example
+upload -f example.json -s localhost -p 3000 -n example
 ```
 
 For help type:

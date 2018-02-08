@@ -1,7 +1,7 @@
 {
   "name": "content-loader",
   "version": "1.0.0",
-  "description": "",
+  "description": "Nodejs command line tool for uploading content to the dictyBase API server",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,6 +12,9 @@
   },
   "author": "",
   "license": "ISC",
+  "bin": {
+    "upload": "./index.js"
+  },
   "bugs": {
     "url": "https://github.com/dictyBase/content-loader/issues"
   },
