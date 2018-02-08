@@ -45,7 +45,7 @@ yargs
 
             // set options for HTTP POST request
             let options = {
-                host: argv.server,
+                host: argv.host,
                 port: argv.port,
                 path: '/contents',
                 method: 'POST',
