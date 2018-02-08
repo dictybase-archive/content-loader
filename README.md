@@ -12,7 +12,7 @@ The script accepts three arguments as such: `upload [-f|--file <file>]  [-s|--se
 To run the script type:
 
 ```
-node index upload|u [-f|--file <file>] [-s|--server <server>] [-p|--port <port>] [-n|--namespace <namespace>]
+node index upload [-f|--file <file>] [-s|--server <server>] [-p|--port <port>] [-n|--namespace <namespace>]
 ```
 
 Example:
