@@ -1,0 +1,198 @@
+{
+    "entityMap": {
+        "0": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": { "url": "/db/cgi-bin/dictyBase/SC/searchform.pl" }
+        },
+        "1": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": { "url": "/StockCenter/DSC_Payment.html" }
+        },
+        "2": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": { "url": "mailto:dictystocks@northwestern.edu" }
+        },
+        "3": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": { "url": "/StockCenter/DSC_Payment.html" }
+        },
+        "4": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": { "url": "/techniques/media/media.html#LPB" }
+        },
+        "5": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": { "url": "/techniques/media/media.html#GYP" }
+        },
+        "6": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": { "url": "/techniques/media/media.html#MAHL5" }
+        },
+        "7": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+                "url": "/techniques/media/dicty_storage.html",
+                "target": "new"
+            }
+        },
+        "8": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+                "url": "/StockCenter/FAQ_StockCenter.html",
+                "target": "new"
+            }
+        },
+        "9": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": { "url": "mailto:dictystocks@northwestern.edu" }
+        }
+    },
+    "blocks": [
+        {
+            "key": "fieok",
+            "text":
+                "To find the item(s) you want, go to the catalogs, or Search the Dicty Stock Center . You can search for strains (including bacterial strains) or plasmids with various search fields. Following searching, click the Name (in blue color) and you will be directed to a new window containing detailed strain or plasmid information. Click Add to Cart at the bottom of the page and the item will be included in the cart. Click the blue shopping cart symbol in the upper right to see what has been ordered so far. Once everything you need is in the shopping cart, click Check Out at the bottom of the page. Fill in the shipping information. Please do not forget the billing number for the shipping charges and the payer information. Note, this payer may be different from the person who places the order! You will receive a confirmation at the email address you provided. Receive the item(s) 7-10 working days later and if you are satisfied, the payer will receive notifications and bills from NU Core to pay for the materials.\n\n",
+            "type": "unstyled",
+            "depth": 0,
+            "inlineStyleRanges": [
+                { "offset": 53, "length": 29, "style": "BOLD" },
+                { "offset": 332, "length": 11, "style": "BOLD" },
+                { "offset": 561, "length": 9, "style": "BOLD" },
+                { "offset": 705, "length": 17, "style": "BOLD" },
+                { "offset": 724, "length": 71, "style": "ITALIC" }
+            ],
+            "entityRanges": [
+                { "offset": 53, "length": 29, "key": 0 },
+                { "offset": 996, "length": 21, "key": 1 }
+            ],
+            "data": {}
+        },
+        {
+            "key": "6m96k",
+            "text": "Ordering Information",
+            "type": "header-one",
+            "depth": 0,
+            "inlineStyleRanges": [],
+            "entityRanges": [],
+            "data": {}
+        },
+        {
+            "key": "b7lou",
+            "text": "Dicty Stock Center Distribution Policy",
+            "type": "header-three",
+            "depth": 0,
+            "inlineStyleRanges": [],
+            "entityRanges": [],
+            "data": {}
+        },
+        {
+            "key": "egc7d",
+            "text":
+                "The DSC fills any request from bona fide teaching or non-profit research institutions. Users from for-profit institutions need to send an email stating that the materials will be used for research only and no profit will be made from DSC materials.\n\nWe also expect the recipient to provide a FedEx, UPS, or a DHL billing number to pay for the shipping. If you do not have any shipping account call the DSC +1 (312) 503-4169 and provide Credit Card information to be added to a Shipper's waybill. The credit card card payment for shipping has nothing to do with DSC charges, and is merely a courtesy to customers who do not have a shipping account with one of the listed providers.\n\nThe Dicty Stock Center strives to ship strains on an LPB plate, a GYP plate, or in HL5, within a week. We try to bundle orders into one shipment, however, since strains grow at different rates, to insure the best viability, we may ship large orders in multiple shipments as dictated by growth. Plasmids will be sent as bacterial transformants on an LB drug plate, or as DNA on a piece of filter paper. When strains are received they need to be stored in the lab following one of the procedures described. New users may also consult our DSC FAQ page.",
+            "type": "unstyled",
+            "depth": 0,
+            "inlineStyleRanges": [
+                { "offset": 53, "length": 10, "style": "BOLD" },
+                { "offset": 98, "length": 10, "style": "BOLD" },
+                { "offset": 561, "length": 11, "style": "BOLD" },
+                { "offset": 1126, "length": 6, "style": "BOLD" },
+                { "offset": 1218, "length": 7, "style": "BOLD" }
+            ],
+            "entityRanges": [
+                { "offset": 138, "length": 5, "key": 2 },
+                { "offset": 561, "length": 11, "key": 3 },
+                { "offset": 735, "length": 9, "key": 4 },
+                { "offset": 748, "length": 9, "key": 5 },
+                { "offset": 765, "length": 3, "key": 6 },
+                { "offset": 1165, "length": 10, "key": 7 },
+                { "offset": 1218, "length": 7, "key": 8 }
+            ],
+            "data": {}
+        },
+        {
+            "key": "7jbie",
+            "text": "Ordering Procedures for Strains or Plasmids:",
+            "type": "header-three",
+            "depth": 0,
+            "inlineStyleRanges": [],
+            "entityRanges": [],
+            "data": {}
+        },
+        {
+            "key": "53q2a",
+            "text": "Step 1:",
+            "type": "header-four",
+            "depth": 0,
+            "inlineStyleRanges": [],
+            "entityRanges": [],
+            "data": {}
+        },
+        {
+            "key": "e7p82",
+            "text": "Step 2:",
+            "type": "header-four",
+            "depth": 0,
+            "inlineStyleRanges": [],
+            "entityRanges": [],
+            "data": {}
+        },
+        {
+            "key": "d10gj",
+            "text": "Step 3:",
+            "type": "header-four",
+            "depth": 0,
+            "inlineStyleRanges": [],
+            "entityRanges": [],
+            "data": {}
+        },
+        {
+            "key": "7m8a7",
+            "text": "Step 4:",
+            "type": "header-four",
+            "depth": 0,
+            "inlineStyleRanges": [],
+            "entityRanges": [],
+            "data": {}
+        },
+        {
+            "key": "d10i3",
+            "text": "Step 5:",
+            "type": "header-four",
+            "depth": 0,
+            "inlineStyleRanges": [],
+            "entityRanges": [],
+            "data": {}
+        },
+        {
+            "key": "ch48d",
+            "text": "Step 6:",
+            "type": "header-four",
+            "depth": 0,
+            "inlineStyleRanges": [],
+            "entityRanges": [],
+            "data": {}
+        },
+        {
+            "key": "ag9af",
+            "text":
+                "If you need additional assistance, please e-mail the Dicty Stock Center.",
+            "type": "unstyled",
+            "depth": 0,
+            "inlineStyleRanges": [
+                { "offset": 0, "length": 72, "style": "BOLD" }
+            ],
+            "entityRanges": [{ "offset": 53, "length": 18, "key": 9 }],
+            "data": {}
+        }
+    ]
+}

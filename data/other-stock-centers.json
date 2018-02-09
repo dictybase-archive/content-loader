@@ -1,0 +1,224 @@
+{
+    "entityMap": {
+        "0": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+                "url":
+                    "javascript:NewWindow('http://www.atcc.org',%20'Other_Stock_Centers',%20'800',%20'600',%20'center','front')"
+            }
+        },
+        "1": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+                "url":
+                    "javascript:NewWindow('http://dshb.biology.uiowa.edu/',%20'Other_Stock_Centers',%20'800',%20'600',%20'center','front')"
+            }
+        },
+        "2": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+                "url":
+                    "javascript:NewWindow('http://dshb.biology.uiowa.edu/s.nl/sc.18/category.11305/.f',%20'Other_Stock_Centers',%20'800',%20'600',%20'center','front')"
+            }
+        },
+        "3": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+                "url":
+                    "javascript:NewWindow('http://nenkin.nbrp.jp/',%20'Other_Stock_Centers',%20'800',%20'600',%20'center','front')"
+            }
+        },
+        "4": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+                "url":
+                    "javascript:NewWindow('https://www.unige.ch/medecine/anticorps/recombinant-antibodies/',%20'Other_Stock_Centers',%20'800',%20'600',%20'center','front')"
+            }
+        },
+        "5": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+                "url":
+                    "javascript:NewWindow('http://www.addgene.org/',%20'Other_Stock_Centers',%20'800',%20'600',%20'center','front')"
+            }
+        },
+        "6": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+                "url":
+                    "javascript:NewWindow('http://nrrl.ncaur.usda.gov',%20'Other_Stock_Centers',%20'800',%20'600',%20'center','front')"
+            }
+        },
+        "7": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+                "url":
+                    "javascript:NewWindow('http://flystocks.bio.indiana.edu/bloomhome.htm',%20'Other_Stock_Centers',%20'800',%20'600',%20'center','front')"
+            }
+        },
+        "8": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+                "url":
+                    "javascript:NewWindow('http://www.cbs.umn.edu/CGC/',%20'Other_Stock_Centers',%20'800',%20'600',%20'center','front')"
+            }
+        },
+        "9": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+                "url":
+                    "javascript:NewWindow('http://www.cbs.knaw.nl/',%20'Other_Stock_Centers',%20'800',%20'600',%20'center','front')"
+            }
+        },
+        "10": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+                "url":
+                    "javascript:NewWindow('http://ccr.coriell.org',%20'Other_Stock_Centers',%20'800',%20'600',%20'center','front')"
+            }
+        },
+        "11": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+                "url":
+                    "javascript:NewWindow('http://www.ccap.ac.uk/index.htm',%20'Other_Stock_Centers',%20'800',%20'600',%20'center','front')"
+            }
+        },
+        "12": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+                "url":
+                    "javascript:NewWindow('https://stockcenter.ucsd.edu/info/welcome.php',%20'Other_Stock_Centers',%20'800',%20'600',%20'center','front')"
+            }
+        },
+        "13": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+                "url":
+                    "javascript:NewWindow('http://www.fgsc.net/',%20'Other_Stock_Centers',%20'800',%20'600',%20'center','front')"
+            }
+        },
+        "14": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+                "url":
+                    "javascript:NewWindow('http://frc.cas.psu.edu/',%20'Other_Stock_Centers',%20'800',%20'600',%20'center','front')"
+            }
+        },
+        "15": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+                "url":
+                    "javascript:NewWindow('https://tetrahymena.vet.cornell.edu/index.php',%20'Other_Stock_Centers',%20'800',%20'600',%20'center','front')"
+            }
+        },
+        "16": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+                "url":
+                    "javascript:NewWindow('http://www.uamh.devonian.ualberta.ca/',%20'Other_Stock_Centers',%20'800',%20'600',%20'center','front')"
+            }
+        },
+        "17": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+                "url":
+                    "javascript:NewWindow('http://www.ars.usda.gov/is/np/systematics/fungibact.htm',%20'Other_Stock_Centers',%20'800',%20'600',%20'center','front')"
+            }
+        },
+        "18": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+                "url":
+                    "javascript:NewWindow('http://www.wfcc.info/',%20'Other_Stock_Centers',%20'800',%20'600',%20'center','front')"
+            }
+        },
+        "19": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+                "url":
+                    "javascript:NewWindow('http://zebrafish.org/zirc/home/guide.php',%20'Other_Stock_Centers',%20'800',%20'600',%20'center','front')"
+            }
+        }
+    },
+    "blocks": [
+        {
+            "key": "4ihsg",
+            "text":
+                "\nAmerican Type Culture Collection (ATCC) | Dictyostelid clones not available in the Dicty Stock Center\n\nDevelopmental Studies Hybridoma Bank (DSHB) | Dictyostelium antigens at DSHB\n\nNational Bio Resource Project Japan (NBRP)\n\nThe Geneva Antibody Facility\n\n\nAddGene plasmid repository\n\nARS Microbial Germplasm Resource (NRRL)\n\nBloomington Drosophila Stock Center (BDSC)\n\nCaenorhabditis Genetics Center (CGC)\n\nCentraalbureau voor Schimmelcultures (CBS)\n\nCoriell Cell Repositories (Human Cell Lines)\n\nCulture Collection of Algae and Protozoa (CCAP)\n\nDrosophila Species Stock Center (DSSC)\n\nFungal Genetics Stock Center (FGSC)\n\nThe Fusarium Research Center at Penn State (FRC)\n\nTetrahymena Stock Center\n\nUniversity of Alberta Microfungus Collection & Herbarium (UAMH)\n\nUSDA-ARS Collection of Entomopathogenic Fungal Cultures (ARSEF)\n\nWorld Federation for Culture Collections (WFCC)\n\nZebrafish International Resource Center (ZIRC)\n",
+            "type": "unstyled",
+            "depth": 0,
+            "inlineStyleRanges": [],
+            "entityRanges": [
+                { "offset": 1, "length": 101, "key": 0 },
+                { "offset": 104, "length": 43, "key": 1 },
+                { "offset": 150, "length": 30, "key": 2 },
+                { "offset": 182, "length": 42, "key": 3 },
+                { "offset": 226, "length": 28, "key": 4 },
+                { "offset": 257, "length": 26, "key": 5 },
+                { "offset": 285, "length": 39, "key": 6 },
+                { "offset": 326, "length": 42, "key": 7 },
+                { "offset": 370, "length": 36, "key": 8 },
+                { "offset": 408, "length": 42, "key": 9 },
+                { "offset": 452, "length": 44, "key": 10 },
+                { "offset": 498, "length": 47, "key": 11 },
+                { "offset": 547, "length": 38, "key": 12 },
+                { "offset": 587, "length": 35, "key": 13 },
+                { "offset": 624, "length": 48, "key": 14 },
+                { "offset": 674, "length": 24, "key": 15 },
+                { "offset": 700, "length": 63, "key": 16 },
+                { "offset": 765, "length": 63, "key": 17 },
+                { "offset": 830, "length": 47, "key": 18 },
+                { "offset": 879, "length": 46, "key": 19 }
+            ],
+            "data": {}
+        },
+        {
+            "key": "d3l1",
+            "text": "Other Stock Centers",
+            "type": "header-one",
+            "depth": 0,
+            "inlineStyleRanges": [],
+            "entityRanges": [],
+            "data": {}
+        },
+        {
+            "key": "7395a",
+            "text": "Other Dicty-Related Stock Centers",
+            "type": "header-three",
+            "depth": 0,
+            "inlineStyleRanges": [],
+            "entityRanges": [],
+            "data": {}
+        },
+        {
+            "key": "fto9j",
+            "text": "Other Biological Stock Centers",
+            "type": "header-three",
+            "depth": 0,
+            "inlineStyleRanges": [],
+            "entityRanges": [],
+            "data": {}
+        }
+    ]
+}
