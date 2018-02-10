@@ -1,4 +1,5 @@
 const fetch = require('node-fetch')
+const moment = require('moment')
 
 exports.command = 'fetch [id] [host] [port]'
 exports.describe = 'retrieve content by id'
@@ -61,11 +62,20 @@ const getContent = async (url) => {
 }
 
 const printContent = (json) => {
-    console.log(
-        `resource link: ${json.links.self}
-        namespace: ${json.data.attributes.namespace}
-        slug: ${json.data.attributes.slug}
-    `)
+    output = `resource link: ${json.links.self}
+    namespace: ${json.data.attributes.namespace}
+    slug: ${json.data.attributes.slug}
+       `
+    created = moment(json.data.attributes.created_at)
+    updated = moment(json.data.attributes.updated_at)
+    if (created.isValid()) {
+        output += `created on: ${created.fromNow()}
+       updated on: ${updated.fromNow()}
+            `
+    } else {
+        console.log('error in parsing date')
+    }
+    console.log(output)
 }
 
 const printError = (res,json) => {
