@@ -28,7 +28,9 @@ exports.builder = yargs => {
                     alias: 'n',
                     type: 'string',
                     describe: 'the namespace for the file'
-                })
+                }).example(
+                    'upload --file example.json --host localhost --port 31827 --namespace example'
+                ).example('upload -f example.json -H localhost -p 31827 -n example')
         }
 
 exports.handler =  argv => {
