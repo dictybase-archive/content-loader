@@ -39,22 +39,17 @@ exports.handler =  argv => {
             host: argv.host,
             port: argv.port,
             path: '/contents/' + argv.identifier,
-            headers: {
-                'Content-Type': 'application/json',
-                'accept': 'application/json'
-            }
+            method: 'GET'
         }
 
         // make the HTTP request
         let req = http.request(options, res => {
-            console.log(`status: ${res.statusCode}\n`)
-            res.setEncoding('utf8')
             let body
             res.on('data', chunk => {
                 body += chunk
             })
             res.on('end', () => {
-                console.log(body)
+                c = JSON.parse(body)
             })
         })
 
@@ -62,4 +57,5 @@ exports.handler =  argv => {
         req.on('error', e => {
             console.log(`Problem with request: ${e}`)
         })
+        req.end()
 }
