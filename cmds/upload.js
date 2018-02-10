@@ -1,92 +1,87 @@
-const fs = require('fs')
-const http = require('http')
+const fetch = require('node-fetch')
 
-exports.command = 'upload [file] [host] [port] [namespace]'
-exports.describe = 'input file to upload with specified host, port and namespace'
-
+exports.command = 'delete [id] [host] [port]'
+exports.describe = 'delete content by id'
 exports.builder = yargs => {
     yargs
-        .positional('file', {
-            alias: 'f',
-            type: 'string',
-            describe: 'the file to upload'
-        })
         .env('CONTENT_API_SERVICE_HOST')
         .positional('host', {
             alias: 'H',
             type: 'string',
             default: 'content-api',
-            describe: 'the server to upload to'
+            describe: 'api server'
         })
         .env('CONTENT_API_SERVICE_PORT')
         .positional('port', {
             alias: 'p',
             type: 'number',
-            describe: 'the port for the server'
+            describe: 'api server port'
         })
-        .positional('namespace', {
-            alias: 'n',
-            type: 'string',
-            describe: 'the namespace for the file'
+        .positional('identifier', {
+            alias: 'id',
+            type: 'number',
+            describe: 'unique identifier for the content'
         })
-        .demandOption(['n','f'])
+        .demandOption(['id'])
         .help('h')
         .example(
-            'upload --file example.json --host localhost --port 31827 --namespace example'
+            'delete --identifier 3 --host localhost --port 31827'
         )
-        .example('upload -f example.json -H localhost -p 31827 -n example')
+        .example(
+            'delete -id 3 -H localhost -p 31827'
+        )
 }
 
+
 exports.handler =  argv => {
-            // read file and convert to string
-        let fileContent = fs.readFileSync(argv.file).toString()
+        const url = `http://${argv.host}:${argv.port}/contents/${argv.identifier}`
+        deleteContent(url)
+}
 
-        // set options for HTTP POST request
-        let options = {
-            host: argv.host,
-            port: argv.port,
-            path: '/contents',
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'accept': 'application/json'
-            }
+// An async function(search google for syntaxes)
+const getContent = async (url) => {
+    try {
+        // get the response(resolves the first promise)
+        res = await fetch(url)
+        if (res.ok) { // successful http response(read the API spec)
+            // now get the json(resolves the second promise)
+            json = await res.json()
+            printContent(json)
+        } else { // this is an http error(error response from server)
+            // comes in JSONAPI error format(http://jsonapi.org/examples/#error-objects-basics)
+            json = await res.json() // this is the error json(same promise)
+            printError(res,json)
         }
+    } catch (err) {
+        //possibly a network error or something
+        console.log(`network error: ${err.message}`)
+    }
 
-        // set object to match dictybase content API
-        let model = {
-            data: {
-                type: 'contents',
-                attributes: {
-                    name: argv.file.slice(0, -5),
-                    created_by: 99999999,
-                    content: fileContent,
-                    namespace: argv.namespace
-                }
-            }
-        }
+}
 
-        // make the HTTP request
-        let req = http.request(options, res => {
-            console.log(`STATUS: ${res.statusCode}\n`)
-            console.log(`HEADERS: ${JSON.stringify(res.headers)}\n`)
-            res.setEncoding('utf8')
-            res.on('data', chunk => {
-                console.log(`BODY: ${chunk}\n`)
-            })
-            res.on('end', () => {
-                console.log('End of data from response.')
-            })
-        })
+const printContent = (json) => {
+    output = `resource link: ${json.links.self}
+    namespace: ${json.data.attributes.namespace}
+    slug: ${json.data.attributes.slug}
+       `
+    created = moment(json.data.attributes.created_at)
+    updated = moment(json.data.attributes.updated_at)
+    if (created.isValid()) {
+        output += `created on: ${created.fromNow()}
+       updated on: ${updated.fromNow()}
+            `
+    } else {
+        console.log('error in parsing date')
+    }
+    console.log(output)
+}
 
-        // notify of potential error messages
-        req.on('error', e => {
-            console.log(`Problem with request: ${e.message}`)
-        })
+const printError = (res,json) => {
+    console.log('got http error******')
+    console.log(
+        `http response: ${res.status}
+         title: ${json.errors[0].title}
+         detail: ${json.errors[0].detail}
+        `)
 
-        // write data to request body
-        req.write(JSON.stringify(model))
-
-        // end request
-        req.end()
 }

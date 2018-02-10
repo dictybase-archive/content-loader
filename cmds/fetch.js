@@ -35,7 +35,6 @@ exports.builder = yargs => {
 
 
 exports.handler =  argv => {
-        // set options for HTTP GET request
         const url = `http://${argv.host}:${argv.port}/contents/${argv.identifier}`
         getContent(url)
 }
