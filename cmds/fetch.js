@@ -23,6 +23,11 @@ exports.builder = yargs => {
             type: 'number',
             describe: 'unique identifier for the content'
         })
+        .positional('print-content', {
+            alias: 'pc',
+            type: 'boolean',
+            describe: 'print the serialized json content'
+        })
         .demandOption(['id'])
         .help('h')
         .example(
@@ -31,16 +36,19 @@ exports.builder = yargs => {
         .example(
             'fetch -id 3 -H localhost -p 31827'
         )
+        .example(
+            'fetch -id 3 -H localhost -p 31827 --pc'
+        )
 }
 
 
 exports.handler =  argv => {
         const url = `http://${argv.host}:${argv.port}/contents/${argv.identifier}`
-        getContent(url)
+        getContent(argv, url)
 }
 
 // An async function(search google for syntaxes)
-const getContent = async (url) => {
+const getContent = async (argv, url) => {
     try {
         // get the response(resolves the first promise)
         res = await fetch(url)
@@ -48,6 +56,9 @@ const getContent = async (url) => {
             // now get the json(resolves the second promise)
             json = await res.json()
             printContent(json)
+            if (argv.pc) {
+                printSerializedContent(json)
+            }
         } else { // this is an http error(error response from server)
             // comes in JSONAPI error format(http://jsonapi.org/examples/#error-objects-basics)
             json = await res.json() // this is the error json(same promise)
@@ -58,6 +69,11 @@ const getContent = async (url) => {
         console.log(`network error: ${err.message}`)
     }
 
+}
+
+const printSerializedContent = (json) => {
+    cjson = JSON.parse(json.data.attributes.content)
+    console.log(cjson)
 }
 
 const printContent = (json) => {
