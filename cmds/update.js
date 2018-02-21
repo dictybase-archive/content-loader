@@ -35,7 +35,7 @@ exports.builder = yargs => {
         .example(
             'update --identifier 3 --file example.json --host localhost --port 31827'
         )
-        .example('upload -id 3 -f example.json -H localhost -p 31827')
+        .example('update -id 3 -f example.json -H localhost -p 31827')
 }
 
 exports.handler =  argv => {
