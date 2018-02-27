@@ -1,4 +1,5 @@
 const fs = require("fs")
+const path = require("path")
 const fetch = require("node-fetch")
 const moment = require("moment")
 
@@ -44,6 +45,7 @@ exports.handler = argv => {
     fs.readdir(argv.folder, (err, files) => {
         if (err) {
             console.log(err)
+            process.exit(1)
         }
         // for each file in folder, run this script
         files.forEach(file => {
@@ -57,7 +59,7 @@ exports.handler = argv => {
                 data: {
                     type: "contents",
                     attributes: {
-                        name: file.slice(0, -5),
+                        name: path.basename(file, path.extname(file)),
                         created_by: 99999999,
                         content: fileContent,
                         namespace: argv.namespace
@@ -68,6 +70,8 @@ exports.handler = argv => {
         })
     })
 }
+
+const uploadFiles = 1
 
 // An async function(search google for syntaxes)
 const postContent = async (url, body) => {
