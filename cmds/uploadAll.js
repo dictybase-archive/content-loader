@@ -37,7 +37,7 @@ exports.builder = yargs => {
         .example(
             "uploadAll --folder data --host localhost --port 31827 --namespace example"
         )
-        .example("uploadAll -f data -H localhost -p 31827 -n example")
+        .example("uploadAll -f data -H localhost -p 31827 -n example").argv
 }
 
 exports.handler = argv => {
@@ -45,33 +45,33 @@ exports.handler = argv => {
     fs.readdir(argv.folder, (err, files) => {
         if (err) {
             console.log(err)
-            process.exit(1)
+            process.exit(1) // stop the script
         }
         // for each file in folder, run this script
-        files.forEach(file => {
-            // read file and convert to string
-            const fileContent = fs
-                .readFileSync(argv.folder + "/" + file)
-                .toString()
-            const url = `http://${argv.host}:${argv.port}/contents`
-            // set object to match dictybase content API
-            const body = {
-                data: {
-                    type: "contents",
-                    attributes: {
-                        name: path.basename(file, path.extname(file)),
-                        created_by: 99999999,
-                        content: fileContent,
-                        namespace: argv.namespace
-                    }
-                }
-            }
-            postContent(url, body)
-        })
+        files.forEach(file =>
+            uploadFiles(file, argv.folder, argv.host, argv.port, argv.namespace)
+        )
     })
 }
 
-const uploadFiles = 1
+const uploadFiles = (file, folder, host, port, namespace) => {
+    // read file and convert to string
+    const fileContent = fs.readFileSync(folder + "/" + file).toString()
+    const url = `http://${host}:${port}/contents`
+    // set object to match dictybase content API
+    const body = {
+        data: {
+            type: "contents",
+            attributes: {
+                name: path.basename(file, path.extname(file)),
+                created_by: 99999999,
+                content: fileContent,
+                namespace: namespace
+            }
+        }
+    }
+    postContent(url, body)
+}
 
 // An async function(search google for syntaxes)
 const postContent = async (url, body) => {
