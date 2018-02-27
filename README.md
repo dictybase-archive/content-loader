@@ -1,5 +1,15 @@
 # dictyBase content loader
+
 Nodejs command line tool for using CRUD with the API server
+
+### Commands:
+
+1. **[Upload](#upload)**
+2. **[UploadAll](#uploadall)**
+3. **[Fetch by Id](#fetch-by-id)**
+4. **[Fetch by Slug](#fetch-by-slug)**
+5. **[Remove](#remove)**
+6. **[Update](#update)**
 
 To get started:
 
@@ -13,9 +23,9 @@ For help type:
 node index -h
 ```
 
-### UPLOAD
+## UPLOAD
 
-The script accepts four arguments as such: `upload [-f|--file <file>]  [-H|--host <host>] [-p|--port <port>] [-n|--namespace <namespace>]`. It converts the desired file into the appropriate JSON format for use with the dictyBase API server.
+The script accepts four arguments as such: `upload [-f|--file <file>] [-H|--host <host>] [-p|--port <port>] [-n|--namespace <namespace>]`. It converts the desired file into the appropriate JSON format for use with the dictyBase API server.
 
 To run the script type:
 
@@ -29,9 +39,25 @@ Example:
 upload -f example.json -H localhost -p 3000 -n example
 ```
 
-### FETCH BY ID
+## UPLOADALL
 
-The script accepts four arguments as such: `fetch [-id|--identifier <ID>]  [-H|--host <host>] [-p|--port <port>] [-pc|--print-content <print seralized JSON content>]`. It retrieves content by ID from the API server.
+The script accepts four arguments as such: `uploadAll [-f|--folder <folder>] [-H|--host <host>] [-p|--port <port>] [-n|--namespace <namespace>]`. It converts the files inside a specified folder into the appropriate JSON format for use with the dictyBase API server.
+
+To run the script type:
+
+```
+uploadAll [-f|--folder <folder>] [-H|--host <host>] [-p|--port <port>] [-n|--namespace <namespace>]
+```
+
+Example:
+
+```
+uploadAll -f data -H localhost -p 3000 -n example
+```
+
+## FETCH BY ID
+
+The script accepts four arguments as such: `fetch [-id|--identifier <ID>] [-H|--host <host>] [-p|--port <port>] [-pc|--print-content <print seralized JSON content>]`. It retrieves content by ID from the API server.
 
 To run the script type:
 
@@ -45,9 +71,9 @@ Example:
 fetch -id 3 -H localhost -p 31827 --pc
 ```
 
-### FETCH BY SLUG
+## FETCH BY SLUG
 
-The script accepts three arguments as such: `fetch [-s|--slug <slug name>]  [-H|--host <host>] [-p|--port <port>]`. It retrieves content by slug name from the API server.
+The script accepts three arguments as such: `fetch [-s|--slug <slug name>] [-H|--host <host>] [-p|--port <port>]`. It retrieves content by slug name from the API server.
 
 To run the script type:
 
@@ -61,9 +87,9 @@ Example:
 fetch -s dsc-faq -H localhost -p 31827
 ```
 
-### REMOVE
+## REMOVE
 
-The script accepts three arguments as such: `delete [-id|--identifier <ID>]  [-H|--host <host>] [-p|--port <port>]`. It removes content with specified ID from the dictyBase API server.
+The script accepts three arguments as such: `delete [-id|--identifier <ID>] [-H|--host <host>] [-p|--port <port>]`. It removes content with specified ID from the dictyBase API server.
 
 To run the script type:
 
@@ -77,9 +103,9 @@ Example:
 delete -id 3 -H localhost -p 31827
 ```
 
-### UPDATE
+## UPDATE
 
-The script accepts four arguments as such: `update [-id|--identifier <ID>]  [-f|--file <file>]  [-H|--host <host>] [-p|--port <port>]`. It updates existing content by ID on the dictyBase API server.
+The script accepts four arguments as such: `update [-id|--identifier <ID>] [-f|--file <file>] [-H|--host <host>] [-p|--port <port>]`. It updates existing content by ID on the dictyBase API server.
 
 To run the script type:
 
