@@ -13,3 +13,6 @@ RUN npm install
 
 # Bundle app source
 COPY . /app
+
+EXPOSE 9930
+ENTRYPOINT ["node", "index.js"]
