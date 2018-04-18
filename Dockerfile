@@ -1,13 +1,15 @@
 FROM node:alpine
+LABEL maintainer "Eric Hartline <erichartline@northwestern.edu>"
 
 # Create app directory
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-ADD . /app
+# Add packages so Docker won't have to install dependencies again
+COPY package.json /app
+COPY package-lock.json /app
 
 # Install necessary packages
 RUN npm install
 
 # Bundle app source
-COPY . .
+COPY . /app
