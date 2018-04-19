@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:7
 LABEL maintainer "Eric Hartline <erichartline@northwestern.edu>"
 
 # Create app directory
@@ -14,5 +14,4 @@ RUN npm install
 # Bundle app source
 COPY . /app
 
-EXPOSE 9930
-ENTRYPOINT ["node", "index.js"]
+ENTRYPOINT ["./contentmanager"]

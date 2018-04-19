@@ -1,7 +1,8 @@
 {
   "name": "content-loader",
   "version": "1.0.0",
-  "description": "Nodejs command line tool for uploading content to the dictyBase API server",
+  "description":
+    "Nodejs command line tool for managing content for the dictyBase API server",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,8 +13,9 @@
   },
   "author": "",
   "license": "ISC",
-  "bin": {
-    "upload": "./index.js"
+  "bin": "index.js",
+  "pkg": {
+    "assets": ["cmds", "data"]
   },
   "bugs": {
     "url": "https://github.com/dictyBase/content-loader/issues"
@@ -23,5 +25,8 @@
     "moment": "^2.20.1",
     "node-fetch": "^2.0.0",
     "yargs": "^11.0.0"
+  },
+  "devDependencies": {
+    "pkg": "^4.3.1"
   }
 }
