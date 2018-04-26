@@ -1,5 +1,5 @@
 FROM node:7
-LABEL maintainer "Eric Hartline <erichartline@northwestern.edu>"
+LABEL maintainer "Eric Hartline <eric.hartline@northwestern.edu>"
 
 # Create app directory
 WORKDIR /app
