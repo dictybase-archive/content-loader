@@ -13,9 +13,8 @@
   },
   "author": "",
   "license": "ISC",
-  "bin": "index.js",
-  "pkg": {
-    "assets": ["cmds", "data"]
+  "bin": {
+    "contentmanager": "index.js"
   },
   "bugs": {
     "url": "https://github.com/dictyBase/content-loader/issues"
@@ -25,8 +24,5 @@
     "moment": "^2.20.1",
     "node-fetch": "^2.0.0",
     "yargs": "^11.0.0"
-  },
-  "devDependencies": {
-    "pkg": "^4.3.1"
   }
 }
