@@ -14,4 +14,7 @@ RUN npm install
 # Bundle app source
 COPY . /app
 
-ENTRYPOINT ["./contentmanager"]
+# Link content-manager command for development
+RUN npm link
+
+ENTRYPOINT ["content-manager"]
