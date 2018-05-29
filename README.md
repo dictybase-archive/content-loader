@@ -25,34 +25,34 @@ node index -h
 
 ## UPLOAD
 
-The script accepts four arguments: `upload [-f|--file <file>] [-H|--host <host>] [-p|--port <port>] [-n|--namespace <namespace>]`. It converts the desired file into the appropriate JSON format for use with the dictyBase API server.
+The script accepts five arguments: `[-f|--file <file>] [-H|--host <host>] [-p|--port <port>] [-n|--namespace <namespace>] [-u|--user <user>]`. It converts the desired file into the appropriate JSON format for use with the dictyBase API server.
 
 To run the script type:
 
 ```
-upload [-f|--file <file>] [-H|--host <host>] [-p|--port <port>] [-n|--namespace <namespace>]
+upload [-f|--file <file>] [-H|--host <host>] [-p|--port <port>] [-n|--namespace <namespace>] [-u|--user <user>]
 ```
 
 Example:
 
 ```
-upload -f example.json -H localhost -p 3000 -n example
+upload -f example.json -H localhost -p 3000 -n example -u 99
 ```
 
 ## UPLOAD ALL
 
-The script accepts four arguments: `uploadAll [-f|--folder <folder>] [-H|--host <host>] [-p|--port <port>] [-n|--namespace <namespace>]`. It converts the files inside a specified folder into the appropriate JSON format for use with the dictyBase API server.
+The script accepts five arguments: `[-f|--folder <folder>] [-H|--host <host>] [-p|--port <port>] [-n|--namespace <namespace>] [-u|--user <user>]`. It converts the files inside a specified folder into the appropriate JSON format for use with the dictyBase API server.
 
 To run the script type:
 
 ```
-uploadAll [-f|--folder <folder>] [-H|--host <host>] [-p|--port <port>] [-n|--namespace <namespace>]
+uploadAll [-f|--folder <folder>] [-H|--host <host>] [-p|--port <port>] [-n|--namespace <namespace>] [-u|--user <user>]
 ```
 
 Example:
 
 ```
-uploadAll -f data -H localhost -p 3000 -n example
+uploadAll -f data -H localhost -p 3000 -n example -u 99
 ```
 
 ## FETCH BY ID
