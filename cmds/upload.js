@@ -54,7 +54,7 @@ exports.handler = argv => {
       type: "contents",
       attributes: {
         name: argv.file.slice(0, -5),
-        created_by: 99999999,
+        created_by: argv.user,
         content: fileContent,
         namespace: argv.namespace,
       },
