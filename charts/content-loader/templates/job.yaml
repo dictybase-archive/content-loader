@@ -19,6 +19,12 @@ spec:
       - name: {{ template "content-loader.fullname" . }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: "{{ .Values.image.pullPolicy }}"
-        args: ["uploadAll", "--folder", "--host", "--port", "--namespace"]
+        args: [
+            "uploadAll", 
+            "--folder", 
+            "{{ .Values.arguments.folder }}",
+            "--namespace",
+            "{{ .Values.arguments.namespace }}"
+            ]
       restartPolicy: Never
 
