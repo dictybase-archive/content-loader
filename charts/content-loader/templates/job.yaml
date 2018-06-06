@@ -21,6 +21,8 @@ spec:
         imagePullPolicy: "{{ .Values.image.pullPolicy }}"
         args: [
             "uploadAll", 
+            "--user",
+            "{{ .Values.arguments.user }}",
             "--folder", 
             "{{ .Values.arguments.folder }}",
             "--namespace",
