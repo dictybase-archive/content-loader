@@ -3,9 +3,8 @@ const path = require("path")
 const fetch = require("node-fetch")
 const moment = require("moment")
 
-exports.command = "uploadAll [folder] [host] [port] [namespace]"
-exports.describe =
-  "input folder to upload with specified host, port and namespace"
+exports.command = "uploadAll [folder] [host] [port] [namespace] [user]"
+exports.describe = "upload folder containing multiple files"
 
 exports.builder = yargs => {
   yargs

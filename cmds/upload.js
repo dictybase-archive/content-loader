@@ -2,9 +2,8 @@ const fs = require("fs")
 const fetch = require("node-fetch")
 const moment = require("moment")
 
-exports.command = "upload [file] [host] [port] [namespace]"
-exports.describe =
-  "input file to upload with specified host, port and namespace"
+exports.command = "upload [file] [host] [port] [namespace] [user]"
+exports.describe = "upload individual file"
 
 exports.builder = yargs => {
   yargs

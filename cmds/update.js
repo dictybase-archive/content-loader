@@ -2,7 +2,7 @@ const fs = require("fs")
 const fetch = require("node-fetch")
 const moment = require("moment")
 
-exports.command = "update [file] [host] [port] [namespace]"
+exports.command = "update [file] [host] [port] [namespace] [user]"
 exports.describe = "update an existing content"
 
 exports.builder = yargs => {
@@ -30,12 +30,17 @@ exports.builder = yargs => {
       type: "number",
       describe: "unique identifier for the content",
     })
-    .demandOption(["id", "f"])
+    .positional("user", {
+      alias: "u",
+      type: "number",
+      describe: "the user who is uploading the content",
+    })
+    .demandOption(["id", "f", "u"])
     .help("h")
     .example(
-      "update --identifier 3 --file example.json --host localhost --port 31827",
+      "update --identifier 3 --file example.json --host localhost --port 31827 --user 99",
     )
-    .example("update -id 3 -f example.json -H localhost -p 31827")
+    .example("update -id 3 -f example.json -H localhost -p 31827 -u 99")
 }
 
 exports.handler = argv => {
@@ -49,7 +54,7 @@ exports.handler = argv => {
       id: argv.identifier,
       type: "contents",
       attributes: {
-        updated_by: "20",
+        updated_by: argv.user,
         content: fileContent,
       },
     },
