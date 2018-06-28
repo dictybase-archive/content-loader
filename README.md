@@ -27,12 +27,6 @@ node index -h
 
 The script accepts five arguments: `[-f|--file <file>] [-H|--host <host>] [-p|--port <port>] [-n|--namespace <namespace>] [-u|--user <user>]`. It converts the desired file into the appropriate JSON format for use with the dictyBase API server.
 
-To run the script type:
-
-```
-upload [-f|--file <file>] [-H|--host <host>] [-p|--port <port>] [-n|--namespace <namespace>] [-u|--user <user>]
-```
-
 Example:
 
 ```
@@ -42,12 +36,6 @@ upload -f example.json -H localhost -p 3000 -n example -u 99
 ## UPLOAD ALL
 
 The script accepts five arguments: `[-f|--folder <folder>] [-H|--host <host>] [-p|--port <port>] [-n|--namespace <namespace>] [-u|--user <user>]`. It converts the files inside a specified folder into the appropriate JSON format for use with the dictyBase API server.
-
-To run the script type:
-
-```
-uploadAll [-f|--folder <folder>] [-H|--host <host>] [-p|--port <port>] [-n|--namespace <namespace>] [-u|--user <user>]
-```
 
 Example:
 
@@ -59,12 +47,6 @@ uploadAll -f data -H localhost -p 3000 -n example -u 99
 
 The script accepts four arguments: `fetch [-id|--identifier <ID>] [-H|--host <host>] [-p|--port <port>] [-pc|--print-content <print serialized JSON content>]`. It retrieves content by ID from the API server.
 
-To run the script type:
-
-```
-fetch [-id|--identifier <file>]  [-H|--host <host>] [-p|--port <port>] [-pc|--print-content <print serialized JSON content>]
-```
-
 Example:
 
 ```
@@ -74,12 +56,6 @@ fetch -id 3 -H localhost -p 31827 --pc
 ## FETCH BY SLUG
 
 The script accepts three arguments: `fetch [-s|--slug <slug name>] [-H|--host <host>] [-p|--port <port>]`. It retrieves content by slug name from the API server.
-
-To run the script type:
-
-```
-fetchbyslug [-s|--slug <slug name>]  [-H|--host <host>] [-p|--port <port>]
-```
 
 Example:
 
@@ -91,12 +67,6 @@ fetchbyslug -s dsc-faq -H localhost -p 31827
 
 The script accepts three arguments: `delete [-id|--identifier <ID>] [-H|--host <host>] [-p|--port <port>]`. It removes content with specified ID from the dictyBase API server.
 
-To run the script type:
-
-```
-delete [-id|--identifier <ID>]  [-H|--host <host>] [-p|--port <port>]
-```
-
 Example:
 
 ```
@@ -105,16 +75,10 @@ delete -id 3 -H localhost -p 31827
 
 ## UPDATE
 
-The script accepts four arguments: `update [-id|--identifier <ID>] [-f|--file <file>] [-H|--host <host>] [-p|--port <port>]`. It updates existing content by ID on the dictyBase API server.
-
-To run the script type:
-
-```
-update [-id|--identifier <ID>]  [-f|--file <file>]  [-H|--host <host>] [-p|--port <port>]
-```
+The script accepts five arguments: `update [-id|--identifier <ID>] [-f|--file <file>] [-H|--host <host>] [-p|--port <port>] [-u|--user <user>]`. It updates existing content by ID on the dictyBase API server.
 
 Example:
 
 ```
-update -id 3 -f example.json -H localhost -p 31827
+update -id 3 -f example.json -H localhost -p 31827 -u 99
 ```
