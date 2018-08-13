@@ -3,6 +3,5 @@ image:
   tag: 0.0.1
   pullPolicy: IfNotPresent
 arguments:
-  folder: data
-  namespace: dsc
-
+  folder: frontpageV1
+  namespace: dfp
