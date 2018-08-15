@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/dictyBase/content-loader#readme",
   "dependencies": {
+    "minio": "^6.0.0",
     "moment": "^2.20.1",
     "node-fetch": "^2.0.0",
     "yargs": "^11.0.0"
