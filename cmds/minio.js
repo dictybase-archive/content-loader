@@ -36,7 +36,7 @@ exports.builder = yargs => {
     .env("S3_SECRET_KEY")
     .positional("secretkey", {
       alias: "skey",
-      type: "number",
+      type: "string",
       describe: "secret key for S3 server"
     })
     .env("CONTENT_API_SERVICE")
@@ -87,6 +87,7 @@ exports.handler = argv => {
     secretKey: argv.secretkey
   })
 
+  // get list of objects then download each one into specified folder
   const stream = minioClient.listObjects("dictybase", argv.folder, true)
   stream.on("data", obj => {
     minioClient.getObject("dictybase", obj.name, (err, dataStream) => {
