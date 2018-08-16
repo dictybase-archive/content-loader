@@ -4,6 +4,30 @@ const os = require("os")
 const fetch = require("node-fetch")
 const moment = require("moment")
 const Minio = require("minio")
+const winston = require("winston")
+
+const logger = winston.createLogger({
+  level: "info",
+  levels: {
+    error: 0,
+    warn: 1,
+    info: 2,
+    verbose: 3,
+    debug: 4,
+    silly: 5,
+  },
+  format: winston.format.combine(winston.format.colorize({ all: true }), winston.format.simple()),
+  transports: [new winston.transports.Console()],
+})
+
+winston.addColors({
+  error: "red",
+  warn: "yellow",
+  info: "blue",
+  verbose: "orange",
+  debug: "green",
+  silly: "white",
+})
 
 exports.command = "minio [path] [miniohost] [minioport] [accesskey] [secretkey] [host] [port] [namespace] [user]"
 exports.describe = "get files from minio and upload to content api server"
@@ -82,14 +106,13 @@ const printContent = json => {
   if (created.isValid()) {
     output += `created on: ${created.fromNow()}`
   } else {
-    console.log("error in parsing date")
+    logger.info("error in parsing date")
   }
-  console.log(output)
+  logger.info(output)
 }
 
 const printError = (res, json) => {
-  console.log("got http error******")
-  console.log(
+  logger.error(
     `http response: ${res.status}
          title: ${json.errors[0].title}
          detail: ${json.errors[0].detail}
@@ -118,7 +141,7 @@ const postContent = async (url, body) => {
     }
   } catch (err) {
     // possibly a network error or something
-    console.log(`network error: ${err.message}`)
+    logger.error(`network error: ${err.message}`)
   }
 }
 
@@ -163,7 +186,7 @@ exports.handler = argv => {
           }
 
           if (err) {
-            return console.log(err)
+            return logger.error(err)
           }
           const file = fs.createWriteStream(`${tmpDir}/${folderName}/${fileName}`)
           dataStream.on("data", chunk => {
@@ -172,16 +195,16 @@ exports.handler = argv => {
           dataStream.on("end", () => {
             file.end()
             resolve(file)
-            console.log(`Finished downloading ${obj.name}`)
+            logger.info(`Finished downloading ${obj.name}`)
           })
           dataStream.on("error", error => {
-            console.log(error)
+            logger.error(error)
             reject(error)
           })
         })
       })
       stream.on("error", err => {
-        console.log(err)
+        logger.error(err)
       })
     })
 
@@ -192,7 +215,7 @@ exports.handler = argv => {
     // read folder
     fs.readdir(`${tmpDir}/${folder}`, (err, files) => {
       if (err) {
-        console.log(err)
+        logger.error(err)
         process.exit(1) // stop the script
       }
       // for each file in folder, run this script
