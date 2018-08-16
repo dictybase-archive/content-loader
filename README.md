@@ -10,6 +10,7 @@ Nodejs command line tool for using CRUD with the API server
 4.  **[Fetch by Slug](#fetch-by-slug)**
 5.  **[Remove](#remove)**
 6.  **[Update](#update)**
+7.  **[Minio](#minio)**
 
 To get started:
 
@@ -81,4 +82,14 @@ Example:
 
 ```
 update -id 3 -f example.json -H localhost -p 31827 -u 99
+```
+
+## MINIO
+
+The script accepts nine arguments: `[-p|--path <path>] [--mh|--miniohost <miniohost>] [--mp|--minioport <minioport>] [--akey|--accesskey <accesskey>] [--skey|--secretkey <secretkey>] [--ch|--chost <chost>] [--cp|--cport <cport>] [-n|--namespace <namespace>] [-u|--user <user>]`. It downloads files from a Minio bucket and object, then uploads them to the content API server.
+
+Example:
+
+```
+minio -p contents/frontpageV1 --mh 192.168.99.100 --mp 33377 --akey qwerty --skey asdf --ch localhost --cp 31827 -n example -u 999
 ```
