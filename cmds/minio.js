@@ -2,18 +2,19 @@ const fs = require("fs")
 const path = require("path")
 const fetch = require("node-fetch")
 const moment = require("moment")
+const tmp = require("tmp")
 const Minio = require("minio")
 
 exports.command =
-  "minio [folder] [miniohost] [minioport] [accesskey] [secretkey] [host] [port] [namespace] [user]"
+  "minio [route] [miniohost] [minioport] [accesskey] [secretkey] [host] [port] [namespace] [user]"
 exports.describe = "get files from minio and upload to content api server"
 
 exports.builder = yargs => {
   yargs
-    .positional("folder", {
-      alias: "f",
+    .positional("route", {
+      alias: "r",
       type: "string",
-      describe: "the folder to download from minio"
+      describe: "the path (route) to the minio folder to download from"
     })
     .env("MINIO_SERVICE_HOST")
     .positional("miniohost", {
@@ -40,15 +41,15 @@ exports.builder = yargs => {
       describe: "secret key for S3 server"
     })
     .env("CONTENT_API_SERVICE")
-    .positional("host", {
-      alias: "H",
+    .positional("chost", {
+      alias: "ch",
       type: "string",
       default: "content-api",
       describe: "the server to upload to"
     })
     .env("CONTENT_API_SERVICE")
-    .positional("port", {
-      alias: "p",
+    .positional("cport", {
+      alias: "cp",
       type: "number",
       describe: "the port for the server"
     })
@@ -62,21 +63,20 @@ exports.builder = yargs => {
       type: "number",
       describe: "the user who is uploading the content"
     })
-    .demandOption(["n", "f", "u"])
+    .demandOption(["r", "n", "u"])
     .help("h")
     .example(
-      "minio --folder frontpageV1 --miniohost 192.168.99.100 --minioport 33377 --accesskey qwerty --secretkey asdf --host localhost --port 31827 --namespace example --user 999"
+      "minio --route contents/frontpageV1 --miniohost 192.168.99.100 --minioport 33377 --accesskey qwerty --secretkey asdf --chost localhost --cport 31827 --namespace example --user 999"
     )
     .example(
-      "minio -f frontpageV1 -mh 192.168.99.100 -mp 33377 -akey qwerty --skey asdf -H localhost -p 31827 -n example -u 999"
+      "minio -r contents/frontpageV1 -mh 192.168.99.100 -mp 33377 -akey qwerty -skey asdf -ch localhost -cp 31827 -n example -u 999"
     )
 }
 
 exports.handler = argv => {
-  // make folder if it doesn't exist
-  if (!fs.existsSync(argv.folder)) {
-    fs.mkdirSync(argv.folder)
-  }
+  // make temp folder
+  const tmpobj = tmp.dirSync()
+  // console.log("Dir: ", tmpobj.name)
 
   // instantiate minioClient object
   const minioClient = new Minio.Client({
@@ -87,14 +87,19 @@ exports.handler = argv => {
     secretKey: argv.secretkey
   })
 
+  // get bucket and folder from route argument
+  const splitPath = argv.route.split("/")
+  const bucket = splitPath[0]
+  const folder = splitPath[1]
+
   // get list of objects then download each one into specified folder
-  const stream = minioClient.listObjects("dictybase", argv.folder, true)
+  const stream = minioClient.listObjects(bucket, folder, true)
   stream.on("data", obj => {
-    minioClient.getObject("dictybase", obj.name, (err, dataStream) => {
+    minioClient.getObject(bucket, obj.name, (err, dataStream) => {
       if (err) {
         return console.log(err)
       }
-      const file = fs.createWriteStream(obj.name)
+      const file = fs.createWriteStream(`${tmpobj.name}/${obj.name}`)
       dataStream.on("data", chunk => {
         file.write(chunk)
       })
@@ -112,7 +117,7 @@ exports.handler = argv => {
   })
 
   // read folder
-  fs.readdir(argv.folder, (err, files) => {
+  fs.readdir(`${tmpobj.name}/${folder}`, (err, files) => {
     if (err) {
       console.log(err)
       process.exit(1) // stop the script
@@ -120,7 +125,9 @@ exports.handler = argv => {
     // for each file in folder, run this script
     files.forEach(file => {
       // read file and convert to string
-      const fileContent = fs.readFileSync(`${argv.folder}/${file}`).toString()
+      const fileContent = fs
+        .readFileSync(`${tmpobj.name}/${folder}/${file}`)
+        .toString()
       const url = `http://${argv.host}:${argv.port}/contents`
       // set object to match dictybase content API
       const body = {
@@ -137,6 +144,8 @@ exports.handler = argv => {
       postContent(url, body)
     })
   })
+  // manual folder cleanup
+  tmpobj.removeCallback()
 }
 
 // An async function(search google for syntaxes)
