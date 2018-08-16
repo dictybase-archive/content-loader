@@ -39,10 +39,5 @@
       "prettier --no-semi --trailing-comma all --jsx-bracket-same-line true --write",
       "git add"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "precommit": "lint-staged"
-    }
   }
 }

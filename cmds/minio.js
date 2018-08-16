@@ -73,12 +73,12 @@ exports.builder = yargs => {
 }
 
 const printContent = json => {
-  output = `resource link: ${json.links.self}
+  let output = `resource link: ${json.links.self}
     id: ${json.data.id}
     namespace: ${json.data.attributes.namespace}
     slug: ${json.data.attributes.slug}
        `
-  created = moment(json.data.attributes.created_at)
+  const created = moment(json.data.attributes.created_at)
   if (created.isValid()) {
     output += `created on: ${created.fromNow()}`
   } else {
@@ -101,19 +101,19 @@ const printError = (res, json) => {
 const postContent = async (url, body) => {
   try {
     // get the response(resolves the first promise)
-    res = await fetch(url, {
+    const res = await fetch(url, {
       method: "POST",
       body: JSON.stringify(body),
     })
     if (res.ok) {
       // successful http response(read the fetch API spec)
       // now get the json(resolves the second promise)
-      json = await res.json()
+      const json = await res.json()
       printContent(json)
     } else {
       // this is an http error(error response from server)
       // comes in JSONAPI error format(http://jsonapi.org/examples/#error-objects-basics)
-      json = await res.json() // this is the error json(same second promise)
+      const json = await res.json() // this is the error json(same second promise)
       printError(res, json)
     }
   } catch (err) {
@@ -141,6 +141,11 @@ exports.handler = argv => {
   const bucket = splitPath[0]
   const folder = splitPath[1]
 
+  // make folder if it doesn't exist
+  if (!fs.existsSync(folder)) {
+    fs.mkdirSync(folder)
+  }
+
   // get list of objects then download each one into specified folder
   const stream = minioClient.listObjects(bucket, folder, true)
   stream.on("data", obj => {
@@ -148,7 +153,7 @@ exports.handler = argv => {
       if (err) {
         return console.log(err)
       }
-      const file = fs.createWriteStream(`${tmpobj.name}/${obj.name}`)
+      const file = fs.createWriteStream(`${obj.name}`)
       dataStream.on("data", chunk => {
         file.write(chunk)
       })
@@ -166,7 +171,7 @@ exports.handler = argv => {
   })
 
   // read folder
-  fs.readdir(`${tmpobj.name}/${folder}`, (err, files) => {
+  fs.readdir(folder, (err, files) => {
     if (err) {
       console.log(err)
       process.exit(1) // stop the script
@@ -174,8 +179,8 @@ exports.handler = argv => {
     // for each file in folder, run this script
     files.forEach(file => {
       // read file and convert to string
-      const fileContent = fs.readFileSync(`${tmpobj.name}/${folder}/${file}`).toString()
-      const url = `http://${argv.host}:${argv.port}/contents`
+      const fileContent = fs.readFileSync(`${folder}/${file}`).toString()
+      const url = `http://${argv.chost}:${argv.cport}/contents`
       // set object to match dictybase content API
       const body = {
         data: {
