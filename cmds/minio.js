@@ -125,7 +125,7 @@ const postContent = async (url, body) => {
 exports.handler = argv => {
   // make temp folder
   const tmpobj = tmp.dirSync()
-  // console.log("Dir: ", tmpobj.name)
+  console.log("Dir: ", tmpobj.name)
 
   // instantiate minioClient object
   const minioClient = new Minio.Client({
@@ -137,65 +137,82 @@ exports.handler = argv => {
   })
 
   // get bucket and folder from route argument
-  const splitPath = argv.route.split("/")
-  const bucket = splitPath[0]
-  const folder = splitPath[1]
+  const splitRoute = argv.route.split("/")
+  const bucket = splitRoute[0]
+  const folder = splitRoute[1]
 
   // make folder if it doesn't exist
   if (!fs.existsSync(folder)) {
     fs.mkdirSync(folder)
   }
 
-  // get list of objects then download each one into specified folder
-  const stream = minioClient.listObjects(bucket, folder, true)
-  stream.on("data", obj => {
-    minioClient.getObject(bucket, obj.name, (err, dataStream) => {
-      if (err) {
-        return console.log(err)
-      }
-      const file = fs.createWriteStream(`${obj.name}`)
-      dataStream.on("data", chunk => {
-        file.write(chunk)
+  const downloadMinioData = () => {
+    const dataPromise = new Promise(async (resolve, reject) => {
+      // get list of objects then download each one into specified folder
+      const stream = await minioClient.listObjects(bucket, folder, true)
+      stream.on("data", obj => {
+        minioClient.getObject(bucket, obj.name, (err, dataStream) => {
+          if (err) {
+            return console.log(err)
+          }
+          const file = fs.createWriteStream(`${obj.name}`)
+          dataStream.on("data", chunk => {
+            file.write(chunk)
+          })
+          dataStream.on("end", () => {
+            file.end()
+            resolve(file)
+            console.log(`Finished downloading ${obj.name}`)
+          })
+          dataStream.on("error", error => {
+            console.log(error)
+            reject(error)
+          })
+        })
       })
-      dataStream.on("end", () => {
-        file.end()
-        console.log(`Finished downloading ${obj.name}`)
-      })
-      dataStream.on("error", error => {
-        console.log(error)
+      stream.on("error", err => {
+        console.log(err)
       })
     })
-  })
-  stream.on("error", err => {
-    console.log(err)
-  })
 
-  // read folder
-  fs.readdir(folder, (err, files) => {
-    if (err) {
-      console.log(err)
-      process.exit(1) // stop the script
-    }
-    // for each file in folder, run this script
-    files.forEach(file => {
-      // read file and convert to string
-      const fileContent = fs.readFileSync(`${folder}/${file}`).toString()
-      const url = `http://${argv.chost}:${argv.cport}/contents`
-      // set object to match dictybase content API
-      const body = {
-        data: {
-          type: "contents",
-          attributes: {
-            name: path.basename(file, path.extname(file)),
-            created_by: argv.user,
-            content: fileContent,
-            namespace: argv.namespace,
-          },
-        },
+    return dataPromise
+  }
+
+  const uploadFiles = () => {
+    // read folder
+    fs.readdir(folder, (err, files) => {
+      if (err) {
+        console.log(err)
+        process.exit(1) // stop the script
       }
-      postContent(url, body)
+      // for each file in folder, run this script
+      files.forEach(file => {
+        // read file and convert to string
+        const fileContent = fs.readFileSync(`${folder}/${file}`).toString()
+        const url = `http://${argv.chost}:${argv.cport}/contents`
+        // set object to match dictybase content API
+        const body = {
+          data: {
+            type: "contents",
+            attributes: {
+              name: path.basename(file, path.extname(file)),
+              created_by: argv.user,
+              content: fileContent,
+              namespace: argv.namespace,
+            },
+          },
+        }
+        postContent(url, body)
+      })
     })
-  })
+  }
+  const functionSync = async () => {
+    const data = await downloadMinioData()
+    const upload = await uploadFiles()
+  }
+
+  functionSync()
+
   // manual folder cleanup
-  tmpobj.removeCallback()
+  // tmpobj.removeCallback()
 }
