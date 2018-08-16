@@ -5,15 +5,15 @@ const fetch = require("node-fetch")
 const moment = require("moment")
 const Minio = require("minio")
 
-exports.command = "minio [route] [miniohost] [minioport] [accesskey] [secretkey] [host] [port] [namespace] [user]"
+exports.command = "minio [path] [miniohost] [minioport] [accesskey] [secretkey] [host] [port] [namespace] [user]"
 exports.describe = "get files from minio and upload to content api server"
 
 exports.builder = yargs => {
   yargs
-    .positional("route", {
-      alias: "r",
+    .positional("path", {
+      alias: "p",
       type: "string",
-      describe: "the path (route) to the minio folder to download from",
+      describe: "the path to the minio folder to download from",
     })
     .env("MINIO_SERVICE_HOST")
     .positional("miniohost", {
@@ -62,13 +62,13 @@ exports.builder = yargs => {
       type: "number",
       describe: "the user who is uploading the content",
     })
-    .demandOption(["r", "n", "u"])
+    .demandOption(["p", "n", "u"])
     .help("h")
     .example(
-      "minio --route contents/frontpageV1 --miniohost 192.168.99.100 --minioport 33377 --accesskey qwerty --secretkey asdf --chost localhost --cport 31827 --namespace example --user 999",
+      "minio --path contents/frontpageV1 --miniohost 192.168.99.100 --minioport 33377 --accesskey qwerty --secretkey asdf --chost localhost --cport 31827 --namespace example --user 999",
     )
     .example(
-      "minio -r contents/frontpageV1 -mh 192.168.99.100 -mp 33377 -akey qwerty -skey asdf -ch localhost -cp 31827 -n example -u 999",
+      "minio -p contents/frontpageV1 --mh 192.168.99.100 --mp 33377 --akey qwerty --skey asdf --ch localhost --cp 31827 -n example -u 999",
     )
 }
 
@@ -125,9 +125,8 @@ const postContent = async (url, body) => {
 exports.handler = argv => {
   // make temp folder
   const tmpDir = os.tmpdir()
-  console.log("Temp directory: ", tmpDir)
 
-  // make folder if it doesn't exist
+  // make temp folder if it doesn't exist
   if (!fs.existsSync(tmpDir)) {
     fs.mkdirSync(tmpDir)
   }
@@ -142,9 +141,9 @@ exports.handler = argv => {
   })
 
   // get bucket and folder from route argument
-  const splitRoute = argv.route.split("/")
-  const bucket = splitRoute[0]
-  const folder = splitRoute[1]
+  const splitPath = argv.path.split("/")
+  const bucket = splitPath[0]
+  const folder = splitPath[1]
 
   const downloadMinioData = () => {
     const dataPromise = new Promise(async (resolve, reject) => {
@@ -219,8 +218,8 @@ exports.handler = argv => {
   }
 
   const functionSync = async () => {
-    const data = await downloadMinioData()
-    const upload = await uploadFiles()
+    await downloadMinioData()
+    await uploadFiles()
   }
 
   functionSync()
