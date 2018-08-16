@@ -1,8 +1,8 @@
 const fs = require("fs")
 const path = require("path")
+const os = require("os")
 const fetch = require("node-fetch")
 const moment = require("moment")
-const tmp = require("tmp")
 const Minio = require("minio")
 
 exports.command = "minio [route] [miniohost] [minioport] [accesskey] [secretkey] [host] [port] [namespace] [user]"
@@ -124,8 +124,13 @@ const postContent = async (url, body) => {
 
 exports.handler = argv => {
   // make temp folder
-  const tmpobj = tmp.dirSync()
-  console.log("Dir: ", tmpobj.name)
+  const tmpDir = os.tmpdir()
+  console.log("Temp directory: ", tmpDir)
+
+  // make folder if it doesn't exist
+  if (!fs.existsSync(tmpDir)) {
+    fs.mkdirSync(tmpDir)
+  }
 
   // instantiate minioClient object
   const minioClient = new Minio.Client({
@@ -141,21 +146,27 @@ exports.handler = argv => {
   const bucket = splitRoute[0]
   const folder = splitRoute[1]
 
-  // make folder if it doesn't exist
-  if (!fs.existsSync(folder)) {
-    fs.mkdirSync(folder)
-  }
-
   const downloadMinioData = () => {
     const dataPromise = new Promise(async (resolve, reject) => {
       // get list of objects then download each one into specified folder
       const stream = await minioClient.listObjects(bucket, folder, true)
       stream.on("data", obj => {
         minioClient.getObject(bucket, obj.name, (err, dataStream) => {
+          // split obj name to get folder and filename
+          const splitName = obj.name.split("/")
+          const folderName = splitName[0]
+          const fileName = splitName[1]
+          const subFolder = `${tmpDir}/${folderName}`
+
+          // make subfolder if it doesn't exist
+          if (!fs.existsSync(subFolder)) {
+            fs.mkdirSync(subFolder)
+          }
+
           if (err) {
             return console.log(err)
           }
-          const file = fs.createWriteStream(`${obj.name}`)
+          const file = fs.createWriteStream(`${tmpDir}/${folderName}/${fileName}`)
           dataStream.on("data", chunk => {
             file.write(chunk)
           })
@@ -180,7 +191,7 @@ exports.handler = argv => {
 
   const uploadFiles = () => {
     // read folder
-    fs.readdir(folder, (err, files) => {
+    fs.readdir(`${tmpDir}/${folder}`, (err, files) => {
       if (err) {
         console.log(err)
         process.exit(1) // stop the script
@@ -188,7 +199,7 @@ exports.handler = argv => {
       // for each file in folder, run this script
       files.forEach(file => {
         // read file and convert to string
-        const fileContent = fs.readFileSync(`${folder}/${file}`).toString()
+        const fileContent = fs.readFileSync(`${tmpDir}/${folder}/${file}`).toString()
         const url = `http://${argv.chost}:${argv.cport}/contents`
         // set object to match dictybase content API
         const body = {
@@ -206,13 +217,11 @@ exports.handler = argv => {
       })
     })
   }
+
   const functionSync = async () => {
     const data = await downloadMinioData()
     const upload = await uploadFiles()
   }
 
   functionSync()
-
-  // manual folder cleanup
-  // tmpobj.removeCallback()
 }
