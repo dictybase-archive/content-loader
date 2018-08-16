@@ -7,7 +7,8 @@ WORKDIR /app
 
 COPY index.js package.json package-lock.json ./
 ADD cmds cmds
-ADD data data
+ADD dscV1 dscV1
+ADD frontpageV1 frontpageV1
 
 # Install necessary packages and link the runner
 RUN npm install && npm link
