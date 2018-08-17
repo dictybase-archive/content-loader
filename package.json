@@ -20,10 +20,11 @@
   },
   "homepage": "https://github.com/dictyBase/content-loader#readme",
   "dependencies": {
+    "bunyan": "^1.8.12",
     "minio": "^6.0.0",
     "moment": "^2.20.1",
     "node-fetch": "^2.0.0",
-    "winston": "^3.0.0",
+    "tmp": "0.0.33",
     "yargs": "^11.0.0"
   },
   "devDependencies": {
