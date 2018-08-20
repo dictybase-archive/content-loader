@@ -83,9 +83,11 @@ exports.builder = yargs => {
     )
 }
 
+//This should be inside the main method[Refactor it]
 const getLogger = () => {
   return bunyan.createLogger({
     name: "uploader",
+    //The log level should be configurable from the command line
     streams: [{ level: "debug", stream: process.stderr }],
   })
 }
@@ -191,6 +193,8 @@ class S3Writer extends Writable {
     this.uploader = uploader
   }
 
+  //This method saves each file in the tmp folder
+  //It gets called on reading every file from s3
   async _write(object, _, done) {
     try {
       const fullPath = filepath.join(
@@ -210,6 +214,8 @@ class S3Writer extends Writable {
     }
   }
 
+  //This method gets called after all files have been read and
+  //processed by the writer
   _final(done) {
     this.uploader.upload(this.folder)
     done()
@@ -226,7 +232,7 @@ const getS3Client = options => {
   })
 }
 
-const listObjects = options => {
+const loadFiles = options => {
   const logger = getLogger()
   const client = getS3Client(options)
   const tmpObj = tmp.dirSync({ prefix: "minio-" })
@@ -234,6 +240,7 @@ const listObjects = options => {
   const { bucket, path, host, port, chost, cport, user, namespace } = options
   const stream = client.listObjects(bucket, path, true)
   const url = `http://${chost}:${cport}/contents`
+  //encapsulated the upload process with a simple class
   const uploader = new FileUploader({
     url,
     namespace,
@@ -252,5 +259,5 @@ const listObjects = options => {
 }
 
 exports.handler = argv => {
-  listObjects(argv)
+  loadFiles(argv)
 }
