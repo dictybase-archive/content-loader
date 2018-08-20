@@ -11,20 +11,24 @@ exports.command = "minio [host] [port] [secret] [access] [bucket] [path] [chost]
 exports.describe = "download data from minio and upload to content API server"
 exports.builder = yargs => {
   yargs
+    .env("MINIO_SERVICE_HOST")
     .positional("host", {
       alias: "H",
       type: "string",
       describe: "minio s3 host",
     })
+    .env("MINIO_SERVICE_PORT")
     .positional("port", {
       alias: "P",
       type: "number",
       describe: "minio server port",
     })
+    .env("S3_ACCESS_KEY")
     .positional("secret", {
       type: "string",
       describe: "server secret key",
     })
+    .env("S3_SECRET_KEY")
     .positional("access", {
       type: "string",
       describe: "server access key",
