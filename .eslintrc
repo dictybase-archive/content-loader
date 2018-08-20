@@ -8,5 +8,6 @@
     "arrow-parens": ["error", "as-needed"],
     "class-methods-use-this": ["error", { "exceptMethods": ["_write"] }],
     "object-curly-newline": ["error", { "multiline": true }]
+    "spaced-comment": ["error", "never"]
   }
 }
