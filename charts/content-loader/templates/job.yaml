@@ -20,13 +20,15 @@ spec:
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: "{{ .Values.image.pullPolicy }}"
         args: [
-            "uploadAll", 
-            "--user",
-            "{{ .Values.arguments.user }}",
-            "--folder", 
-            "{{ .Values.arguments.folder }}",
+            "minio", 
+            "--bucket", 
+            "{{ .Values.arguments.bucket }}",
+            "--path", 
+            "{{ .Values.arguments.path }}",
             "--namespace",
-            "{{ .Values.arguments.namespace }}"
+            "{{ .Values.arguments.namespace }}",
+            "--user",
+            "{{ .Values.arguments.user }}"
             ]
       restartPolicy: Never
 

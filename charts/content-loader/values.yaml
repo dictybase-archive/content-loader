@@ -1,7 +1,6 @@
 image:
   repository: dictybase/content-loader
-  tag: 0.0.2
+  tag: 0.0.3
   pullPolicy: IfNotPresent
 arguments:
-  folder: frontpageV1
   namespace: dfp

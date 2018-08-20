@@ -1,6 +1,6 @@
 {
   "name": "content-loader",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Nodejs command line tool for managing content for the dictyBase API server",
   "main": "index.js",
   "scripts": {
