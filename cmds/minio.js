@@ -7,8 +7,7 @@ const fetch = require("node-fetch")
 const moment = require("moment")
 const tmp = require("tmp")
 
-exports.command =
-  "minio [host] [port] [secret] [access] [bucket] [path] [chost] [cport] [n] [u]"
+exports.command = "minio [host] [port] [secret] [access] [bucket] [path] [chost] [cport] [n] [u]"
 exports.describe = "download data from minio and upload to content API server"
 exports.builder = yargs => {
   yargs
@@ -65,18 +64,7 @@ exports.builder = yargs => {
       type: "number",
       describe: "the user who is uploading the content",
     })
-    .demandOption([
-      "H",
-      "P",
-      "secret",
-      "access",
-      "p",
-      "b",
-      "chost",
-      "cport",
-      "n",
-      "u",
-    ])
+    .demandOption(["H", "P", "secret", "access", "p", "b", "chost", "cport", "n", "u"])
     .help("h")
     .example(
       "minio -H play.minio.io --port 9000 --secret 48kjpqr3u --access furiwer02 -b mybucket -p /content --chost 192.168.99.100 --cport 30999 -n dsc -u 999",
@@ -110,7 +98,7 @@ slug: ${json.data.attributes.slug}
     if (created.isValid()) {
       output += `created on: ${created.fromNow()}`
     } else {
-      logger.warn("error in parsing date")
+      this.logger.warn("error in parsing date")
     }
     this.logger.info(output)
   }
@@ -126,43 +114,41 @@ slug: ${json.data.attributes.slug}
 
   async postContent(body) {
     try {
-      // get the response(resolves the first promise)
+      //get the response(resolves the first promise)
       const res = await fetch(this.url, {
         method: "POST",
         body: JSON.stringify(body),
       })
       if (res.ok) {
-        // successful http response
-        // now get the json (resolves the second promise)
+        //successful http response
+        //now get the json (resolves the second promise)
         const json = await res.json()
         this.printContent(json)
       } else {
-        // this is an http error (error response from server)
-        // comes in JSONAPI error format
-        const json = await res.json() // this is the error json (same second promise)
+        //this is an http error (error response from server)
+        //comes in JSONAPI error format
+        const json = await res.json() //this is the error json (same second promise)
         this.printError(res, json)
       }
     } catch (err) {
-      // possibly a network error or something
+      //possibly a network error or something
       this.logger.error(`network error: ${err.message}`)
     }
   }
 
   upload(folder) {
-    const logger = this.logger
-    // read folder
+    const { logger } = this
+    //read folder
     const files = fs.readdirSync(folder)
     if (files.length === 0) {
       logger.error("no files found to upload")
       return
     }
-    // for each file in folder, run this script
+    //for each file in folder, run this script
     files.forEach(file => {
-      // read file and convert to string
-      const fileContent = fs
-        .readFileSync(filepath.join(folder, file))
-        .toString()
-      // set object to match dictybase content API
+      //read file and convert to string
+      const fileContent = fs.readFileSync(filepath.join(folder, file)).toString()
+      //set object to match dictybase content API
       const body = {
         data: {
           type: "contents",
@@ -181,9 +167,7 @@ slug: ${json.data.attributes.slug}
 
 class S3Writer extends Writable {
   constructor({ client, bucket, logger, folder, uploader }) {
-    super({
-      objectMode: true,
-    })
+    super({ objectMode: true })
     this.client = client
     this.bucket = bucket
     this.logger = logger
@@ -195,19 +179,12 @@ class S3Writer extends Writable {
   //It gets called on reading every file from s3
   async _write(object, _, done) {
     try {
-      const fullPath = filepath.join(
-        this.folder,
-        filepath.basename(object.name),
-      )
+      const fullPath = filepath.join(this.folder, filepath.basename(object.name))
       await this.client.fGetObject(this.bucket, object.name, fullPath)
       this.logger.debug("saved %s", fullPath)
       done()
     } catch (error) {
-      this.logger.error(
-        "unable to write the file %s %s",
-        object.name,
-        error.message,
-      )
+      this.logger.error("unable to write the file %s %s", object.name, error.message)
       done(error)
     }
   }
@@ -235,7 +212,7 @@ const loadFiles = options => {
   const client = getS3Client(options)
   const tmpObj = tmp.dirSync({ prefix: "minio-" })
   const folder = tmpObj.name
-  const { bucket, path, host, port, chost, cport, user, namespace } = options
+  const { bucket, path, chost, cport, user, namespace } = options
   const stream = client.listObjects(bucket, path, true)
   const url = `http://${chost}:${cport}/contents`
   //encapsulated the upload process with a simple class
