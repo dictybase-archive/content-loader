@@ -78,15 +78,6 @@ class FileUploader {
     this.logger = logger
   }
 
-  printError(res, json) {
-    this.logger.error(
-      "http response: %s\ttitle: %s\t detail: %s",
-      res.status,
-      json.errors[0].title,
-      json.errors[0].detail,
-    )
-  }
-
   async postContent(body) {
     try {
       //get the response (resolves the first promise)
@@ -103,7 +94,7 @@ class FileUploader {
         //this is an http error (error response from server)
         //comes in JSONAPI error format
         const json = await res.json() //this is the error json (same second promise)
-        this.printError(res, json)
+        this.logger.error("Error status: ", res.status, json.errors[0].title, json.errors[0].detail)
       }
     } catch (err) {
       //possibly a network error or something
