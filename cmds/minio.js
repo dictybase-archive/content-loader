@@ -11,14 +11,12 @@ exports.describe = "download data from minio and upload to content API server"
 exports.builder = yargs => {
   yargs
     .env("MINIO_SERVICE_HOST")
-    .positional("host", {
-      alias: "H",
+    .positional("mhost", {
       type: "string",
       describe: "minio s3 host",
     })
     .env("MINIO_SERVICE_PORT")
-    .positional("port", {
-      alias: "P",
+    .positional("mport", {
       type: "number",
       describe: "minio server port",
     })
@@ -63,10 +61,10 @@ exports.builder = yargs => {
       type: "number",
       describe: "the user who is uploading the content",
     })
-    .demandOption(["H", "P", "secret", "access", "p", "b", "chost", "cport", "n", "u"])
+    .demandOption(["mhost", "mport", "secret", "access", "b", "p", "chost", "cport", "n", "u"])
     .help("h")
     .example(
-      "minio -H play.minio.io --port 9000 --secret 48kjpqr3u --access furiwer02 -b mybucket -p /content --chost 192.168.99.100 --cport 30999 -n dsc -u 999",
+      "minio --mhost play.minio.io --mport 9000 --secret 48kjpqr3u --access furiwer02 -b mybucket -p /content --chost 192.168.99.100 --cport 30999 -n dsc -u 999",
     )
 }
 
@@ -170,8 +168,8 @@ class S3Writer extends Writable {
 
 const getS3Client = options => {
   return new Minio.Client({
-    endPoint: options.host,
-    port: options.port,
+    endPoint: options.mhost,
+    port: options.mport,
     accessKey: options.access,
     secretKey: options.secret,
     useSSL: false,

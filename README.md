@@ -86,10 +86,10 @@ update -id 3 -f example.json -H localhost -p 31827 -u 99
 
 ## MINIO
 
-The script accepts nine arguments: `[-p|--path <path>] [--mh|--miniohost <miniohost>] [--mp|--minioport <minioport>] [--akey|--accesskey <accesskey>] [--skey|--secretkey <secretkey>] [--ch|--chost <chost>] [--cp|--cport <cport>] [-n|--namespace <namespace>] [-u|--user <user>]`. It downloads files from a Minio bucket and object, then uploads them to the content API server.
+The script accepts nine arguments: `[--mhost <minio s3 host>] [--mport <minio s3 port>] [--access <access key>] [--secret <secret key>] [-b|--bucket <bucket>] [-p|--path <path>] [--ch|--chost <chost>] [--cp|--cport <cport>] [-n|--namespace <namespace>] [-u|--user <user>]`. It downloads files from a Minio bucket and object, then uploads them to the content API server.
 
 Example:
 
 ```
-minio -p contents/frontpageV1 --mh 192.168.99.100 --mp 33377 --akey qwerty --skey asdf --ch localhost --cp 31827 -n example -u 999
+minio --mhost play.minio.io --mport 9000 --secret 48kjpqr3u --access furiwer02 -b mybucket -p /content --chost 192.168.99.100 --cport 30999 -n dsc -u 999
 ```
