@@ -87,7 +87,7 @@ exports.builder = yargs => {
 const getLogger = () => {
   return bunyan.createLogger({
     name: "uploader",
-    //The log level should be configurable from the command line
+    //The log level should be configurable from command line
     streams: [{ level: "debug", stream: process.stderr }],
   })
 }
@@ -125,8 +125,6 @@ slug: ${json.data.attributes.slug}
   }
 
   async postContent(body) {
-    this.logger.info("going to upload %s", this.url)
-    return
     try {
       // get the response(resolves the first promise)
       const res = await fetch(this.url, {
