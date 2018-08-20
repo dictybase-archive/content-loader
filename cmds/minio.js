@@ -7,75 +7,81 @@ const fetch = require("node-fetch")
 const moment = require("moment")
 const tmp = require("tmp")
 
-const argv = yargs // eslint-disable-line
-  .usage(
-    "Usage: $0 [options] - download data from minio and upload to content API server",
-  )
-  .option("host", {
-    alias: "H",
-    type: "string",
-    describe: "minio s3 host",
-  })
-  .option("port", {
-    alias: "P",
-    type: "number",
-    describe: "minio server port",
-  })
-  .option("secret", {
-    type: "string",
-    describe: "server secret key",
-  })
-  .option("access", {
-    type: "string",
-    describe: "server access key",
-  })
-  .option("bucket", {
-    alias: "b",
-    type: "string",
-    describe: "storage bucket",
-  })
-  .option("path", {
-    alias: "p",
-    type: "string",
-    describe: "folder path",
-  })
-  .env("CONTENT_API_SERVICE")
-  .option("chost", {
-    type: "string",
-    default: "content-api",
-    describe: "the server to upload to",
-  })
-  .env("CONTENT_API_SERVICE")
-  .option("cport", {
-    type: "number",
-    describe: "the port for the server",
-  })
-  .option("namespace", {
-    alias: "n",
-    type: "string",
-    describe: "the namespace for the folder",
-  })
-  .option("user", {
-    alias: "u",
-    type: "number",
-    describe: "the user who is uploading the content",
-  })
-  .demandOption([
-    "H",
-    "P",
-    "secret",
-    "access",
-    "p",
-    "b",
-    "chost",
-    "cport",
-    "n",
-    "u",
-  ])
-  .help("h")
-  .example(
-    "$0 -H play.minio.io --port 9000 --secret 48kjpqr3u --access furiwer02 -b mybucket -p content --chost 192.168.99.100 --cport 30999 -n dsc -u 999",
-  ).argv
+exports.command =
+  "minio [host] [port] [secret] [access] [bucket] [path] [chost] [cport] [n] [u]"
+exports.describe = "download data from minio and upload to content API server"
+exports.builder = yargs => {
+  yargs
+    .env("MINIO_SERVICE_HOST")
+    .positional("host", {
+      alias: "H",
+      type: "string",
+      describe: "minio s3 host",
+    })
+    .env("MINIO_SERVICE_PORT")
+    .positional("port", {
+      alias: "P",
+      type: "number",
+      describe: "minio server port",
+    })
+    .env("S3_ACCESS_KEY")
+    .positional("secret", {
+      type: "string",
+      describe: "server secret key",
+    })
+    .env("S3_SECRET_KEY")
+    .positional("access", {
+      type: "string",
+      describe: "server access key",
+    })
+    .positional("bucket", {
+      alias: "b",
+      type: "string",
+      describe: "storage bucket",
+    })
+    .positional("path", {
+      alias: "p",
+      type: "string",
+      describe: "folder path",
+    })
+    .env("CONTENT_API_SERVICE")
+    .positional("chost", {
+      type: "string",
+      default: "content-api",
+      describe: "the server to upload to",
+    })
+    .env("CONTENT_API_SERVICE")
+    .positional("cport", {
+      type: "number",
+      describe: "the port for the server",
+    })
+    .positional("namespace", {
+      alias: "n",
+      type: "string",
+      describe: "the namespace for the folder",
+    })
+    .positional("user", {
+      alias: "u",
+      type: "number",
+      describe: "the user who is uploading the content",
+    })
+    .demandOption([
+      "H",
+      "P",
+      "secret",
+      "access",
+      "p",
+      "b",
+      "chost",
+      "cport",
+      "n",
+      "u",
+    ])
+    .help("h")
+    .example(
+      "minio -H play.minio.io --port 9000 --secret 48kjpqr3u --access furiwer02 -b mybucket -p /content --chost 192.168.99.100 --cport 30999 -n dsc -u 999",
+    )
+}
 
 const getLogger = () => {
   return bunyan.createLogger({
@@ -247,5 +253,4 @@ const listObjects = options => {
 
 exports.handler = argv => {
   listObjects(argv)
-  // uploadFiles(argv)
 }
