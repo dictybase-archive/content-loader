@@ -4,7 +4,6 @@ const bunyan = require("bunyan")
 const { Writable } = require("stream")
 const filepath = require("path")
 const fetch = require("node-fetch")
-const moment = require("moment")
 const tmp = require("tmp")
 
 exports.command = "minio [host] [port] [secret] [access] [bucket] [path] [chost] [cport] [n] [u]"
@@ -79,21 +78,6 @@ class FileUploader {
     this.logger = logger
   }
 
-  printContent(json) {
-    let output = `resource link: ${json.links.self}
-    id: ${json.data.id}
-    namespace: ${json.data.attributes.namespace}
-    slug: ${json.data.attributes.slug}
-       `
-    const created = moment(json.data.attributes.created_at)
-    if (created.isValid()) {
-      output += `created on: ${created.fromNow()}`
-    } else {
-      this.logger.warn("error in parsing date")
-    }
-    this.logger.info(output)
-  }
-
   printError(res, json) {
     this.logger.error(
       "http response: %s\ttitle: %s\t detail: %s",
@@ -105,7 +89,7 @@ class FileUploader {
 
   async postContent(body) {
     try {
-      //get the response(resolves the first promise)
+      //get the response (resolves the first promise)
       const res = await fetch(this.url, {
         method: "POST",
         body: JSON.stringify(body),
@@ -114,7 +98,7 @@ class FileUploader {
         //successful http response
         //now get the json (resolves the second promise)
         const json = await res.json()
-        this.printContent(json)
+        this.logger.info(`ID #${json.data.id} successfully uploaded`)
       } else {
         //this is an http error (error response from server)
         //comes in JSONAPI error format
@@ -183,8 +167,13 @@ class S3Writer extends Writable {
   //This method gets called after all files have been read and
   //processed by the writer
   _final(done) {
-    this.uploader.upload(this.folder)
-    done()
+    try {
+      this.uploader.upload(this.folder)
+      done()
+    } catch (error) {
+      this.logger.error("unable to upload file", error.message)
+      done(error)
+    }
   }
 }
 
@@ -194,7 +183,7 @@ const getS3Client = options => {
     port: options.port,
     accessKey: options.access,
     secretKey: options.secret,
-    secure: false,
+    useSSL: false,
   })
 }
 
