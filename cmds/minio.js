@@ -71,15 +71,6 @@ exports.builder = yargs => {
     )
 }
 
-//This should be inside the main method[Refactor it]
-const getLogger = () => {
-  return bunyan.createLogger({
-    name: "uploader",
-    //The log level should be configurable from command line
-    streams: [{ level: "debug", stream: process.stderr }],
-  })
-}
-
 class FileUploader {
   constructor({ url, namespace, user, logger }) {
     this.url = url
@@ -90,10 +81,10 @@ class FileUploader {
 
   printContent(json) {
     let output = `resource link: ${json.links.self}
-id: ${json.data.id}
-namespace: ${json.data.attributes.namespace}
-slug: ${json.data.attributes.slug}
-`
+    id: ${json.data.id}
+    namespace: ${json.data.attributes.namespace}
+    slug: ${json.data.attributes.slug}
+       `
     const created = moment(json.data.attributes.created_at)
     if (created.isValid()) {
       output += `created on: ${created.fromNow()}`
@@ -203,12 +194,16 @@ const getS3Client = options => {
     port: options.port,
     accessKey: options.access,
     secretKey: options.secret,
-    useSSL: false,
+    secure: false,
   })
 }
 
 const loadFiles = options => {
-  const logger = getLogger()
+  const logger = bunyan.createLogger({
+    name: "uploader",
+    //The log level should be configurable from command line
+    streams: [{ level: "debug", stream: process.stderr }],
+  })
   const client = getS3Client(options)
   const tmpObj = tmp.dirSync({ prefix: "minio-" })
   const folder = tmpObj.name
