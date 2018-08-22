@@ -4,7 +4,8 @@
   "description": "Nodejs command line tool for managing content for the dictyBase API server",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "precommit": "lint-staged"
   },
   "repository": {
     "type": "git",
@@ -40,5 +41,10 @@
       "prettier --no-semi --trailing-comma all --jsx-bracket-same-line true --write",
       "git add"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "precommit": "lint-staged"
+    }
   }
 }
