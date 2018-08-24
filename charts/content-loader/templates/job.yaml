@@ -28,7 +28,19 @@ spec:
             "--namespace",
             "{{ .Values.arguments.namespace }}",
             "--user",
-            "{{ .Values.arguments.user }}"
+            "{{ .Values.arguments.user }}",
+            "--mhost",
+            "$(MINIO_SERVICE_HOST)",
+            "--mport",
+            "$(MINIO_SERVICE_PORT)",
+            "--secret",
+            "{{ .Values.arguments.secret }}",
+            "--access",
+            "{{ .Values.arguments.access }}",
+            "--chost",
+            "$(CONTENT_API_SERVICE_HOST)",
+            "--cport",
+            "$(CONTENT_API_SERVICE_PORT)"
             ]
       restartPolicy: Never
 

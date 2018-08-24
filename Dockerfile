@@ -1,4 +1,4 @@
-FROM node:8.11.2-alpine
+FROM node:10.9.0-alpine
 LABEL maintainer "Eric Hartline <eric.hartline@northwestern.edu>"
 LABEL maintainer "Siddhartha Basu <siddhartha-basu@northwestern.edu>"
 
